@@ -10,10 +10,30 @@
 ; # = WIN
 ;
 
-!1::Run http://www.google.com 
 
-; Page Up & Down
-CapsLock & v::Send {PgDn}
+;; when using mac to connect windows vm sometimes
+!^Left::Send #^{Left}
+!^Right::Send #^{Right}
+
+; !1::Run http://www.google.com 
+
+
+;;; Transfer CapsLock to Function key
+
+;  CapsLock processing.  Must double tap CapsLock to toggle CapsLock mode on or off.
+CapsLock::
+KeyWait, CapsLock ; Wait forever until Capslock is released.
+KeyWait, CapsLock, D T0.2 ; ErrorLevel = 1 if CapsLock not down within 0.2 seconds.
+if ((ErrorLevel = 0) && (A_PriorKey = "CapsLock") ) ; Is a double tap on CapsLock?
+{
+SetCapsLockState, % GetKeyState("CapsLock","T") ? "Off" : "On" ; Toggle the state of CapsLock LED
+} else {
+;switch mode of input method
+Send {LShift}
+}
+return
+
+
 CapsLock & u::Send {PgUp}
 ; VScode
 ; go to line
@@ -22,11 +42,11 @@ CapsLock & g::Send ^g
 CapsLock & r::Send ^r
 ; delete line
 CapsLock & d::Send ^+k
+; go to start
 CapsLock & a::Send {Home}
+; go to end
 CapsLock & e::Send {End}
 
-; switch Chinese&English mode of input method
-CapsLock::Send ^{Space}
 
 ; --------------------------------------------------------------
 ; OS X Like system shortcuts
@@ -92,3 +112,5 @@ CapsLock::Send ^{Space}
 ; Comment
 !/::Send ^/
 
+; Alt + Left Mounse Click => Ctrl + Click
+!LButton::Send ^{Click}
