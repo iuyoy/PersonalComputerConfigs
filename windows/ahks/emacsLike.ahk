@@ -167,6 +167,24 @@ move_end_of_line()
     Send {END}
   Return
 }
+move_beginning_of_file()
+{
+  global
+  if is_pre_spc
+    Send +^{Home} 
+  Else
+    Send ^{Home}
+  Return
+}
+move_end_of_file()
+{
+  global
+  if is_pre_spc
+    Send +^{End} 
+  Else
+    Send ^{End}
+  Return
+}
 previous_line()
 {
   global
@@ -198,9 +216,27 @@ backward_char()
 {
   global
   if is_pre_spc
-    Send +{Left} 
+      Send +{Left} 
   Else
     Send {Left}
+  Return
+}
+forward_word()
+{
+  global
+  if is_pre_spc
+    Send +^{Right}
+  Else
+    Send ^{Right}
+  Return
+}
+backward_word()
+{
+  global
+  if is_pre_spc
+    Send +^{Left} 
+  Else
+    Send ^{Left}
   Return
 }
 scroll_up()
@@ -239,7 +275,29 @@ CapsLock & f::
     Else
       forward_char()
   }
-  Return  
+  Return
+CapsLock & b::
+  If is_target()
+    Send %A_ThisHotkey%
+  Else
+    backward_char()
+  Return 
+
+#UseHook, On
+CapsLock & ]::
+  If is_target()
+    Send %A_ThisHotkey%
+  Else
+    forward_word()
+  Return 
+CapsLock & [::
+  If is_target()
+    Send %A_ThisHotkey%
+  Else
+    backward_word()
+  Return
+#UseHook, Off
+
 CapsLock & c::
   If is_target()
     Send %A_ThisHotkey%
@@ -379,6 +437,18 @@ CapsLock & e::
   Else
     move_end_of_line()
   Return
+CapsLock & ,::
+  If is_target()
+    Send %A_ThisHotkey%
+  Else
+    move_beginning_of_file()
+  Return
+CapsLock & .::
+  If is_target()
+    Send %A_ThisHotkey%
+  Else
+    move_end_of_file()
+  Return
 CapsLock & p::
   If is_target()
     Send %A_ThisHotkey%
@@ -390,12 +460,6 @@ CapsLock & n::
     Send %A_ThisHotkey%
   Else
     next_line()
-  Return
-CapsLock & b::
-  If is_target()
-    Send %A_ThisHotkey%
-  Else
-    backward_char()
   Return
 CapsLock & v::
   If is_target()
