@@ -23,8 +23,9 @@ In windows sub-folder
 |     file      | content                                                                               |
 | :-----------: | ------------------------------------------------------------------------------------- |
 | git-alias.ps1 | short alias for git commands.                                                         |
-|  mykeys.ahk   | autohotkey script.                                                                    |
 |  profile.ps1  | Powershell profile file including Oh-my-posh configs, PSReadline configs and aliases. |
+|     ahks      | autohotkey scripts, including some Mac OS shortcuts and Emacs-like shortcuts.         |
+|    Scripts    | Scripts used to sync scripts or configs.                                              |
 
 ### Terminal & Shell
 
